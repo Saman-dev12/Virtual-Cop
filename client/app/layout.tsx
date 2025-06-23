@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import Provider from "@/utils/Provider";
 
 export const metadata: Metadata = {
   title: "VeriFIR",
@@ -13,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider
           attribute="class"
@@ -21,7 +22,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Provider>
           {children}
+          </Provider>
         </ThemeProvider>
       </body>
     </html>
