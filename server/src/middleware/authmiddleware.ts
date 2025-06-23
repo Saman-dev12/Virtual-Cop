@@ -10,12 +10,16 @@ declare global {
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const walletAddress = req.cookies['wallet-address'];
+    console.log(walletAddress)
   
-    if (walletAddress) {
-      req.user = { address: walletAddress };
-      return next();
+    if (!walletAddress) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
     }
-  
-    return res.status(401).json({ message: "Unauthorized" });
+    req.user = { address: walletAddress };
+    console.log(walletAddress)
+    console.log(req.user)
+    
+    next();
   };
   

@@ -6,7 +6,7 @@ export default function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === '/' && address) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
-  if(!address && request.nextUrl.pathname === '/dashboard') {
+  if (!address && request.nextUrl.pathname.startsWith('/dashboard')) {
     return NextResponse.redirect(new URL('/', request.url));
   }
 

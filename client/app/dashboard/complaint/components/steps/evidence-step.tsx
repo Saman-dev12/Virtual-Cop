@@ -6,6 +6,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { X, ImageIcon, Camera } from "lucide-react"
 import type { ComplaintFormData } from "../complaint-form"
 import { useDropzone } from "react-dropzone"
+import { toast } from "sonner"
+
 
 interface EvidenceStepProps {
   formData: ComplaintFormData
@@ -31,31 +33,66 @@ export default function EvidenceStep({ formData, updateFormData, nextStep, prevS
   const handleFilesAdded = (files: File[]) => {
     setUploadedFiles((prev) => [...prev, ...files])
 
-    // Create preview URLs for the uploaded files
+   
     const newPreviewUrls = files.map((file) => URL.createObjectURL(file))
     setPreviewUrls((prev) => [...prev, ...newPreviewUrls])
 
-    // In a real app, you would upload these files to a server and get back URLs
-    // For this example, we'll just use the object URLs as placeholders
     const newImageUrls = newPreviewUrls.map((url) => url)
     updateFormData({ images: [...(formData.images || []), ...newImageUrls] })
   }
 
   const removeFile = (index: number) => {
-    // Remove the file from the uploadedFiles array
     const newUploadedFiles = [...uploadedFiles]
     newUploadedFiles.splice(index, 1)
     setUploadedFiles(newUploadedFiles)
 
-    // Remove the preview URL
     const newPreviewUrls = [...previewUrls]
     URL.revokeObjectURL(newPreviewUrls[index])
     newPreviewUrls.splice(index, 1)
     setPreviewUrls(newPreviewUrls)
 
-    // Update the form data
+    
     updateFormData({ images: newPreviewUrls })
   }
+
+  const handleUpload = () => {
+    uploadToPinata()
+    setIsModalOpen(false)
+  }
+
+  const uploadToPinata = async () => {
+    const formData = new FormData()
+    uploadedFiles.forEach((file) => {
+      formData.append("images", file)
+    })
+    console.log(formData)
+  
+    try {
+      const response = await fetch("http://localhost:8000/api/complaint/upload", {
+        method: "POST",
+        body: formData,
+        credentials:"include"
+      })
+
+      console.log(response)
+  
+      if (!response.ok) throw new Error("Upload failed")
+  
+      const data = await response.json()
+      const urls = data.pinnedFiles.map((f: { gatewayUrl: string }) => f.gatewayUrl)
+  
+      updateFormData({ images: urls })
+      setPreviewUrls(urls)
+      setUploadedFiles([])
+      setIsModalOpen(false)
+  
+      toast.success("Upload successful")
+    } catch (err) {
+      console.error("Error uploading to IPFS:", err)
+      alert("Upload failed. Please try again.")
+    }
+  }
+  
 
   return (
     <div className="space-y-8">
@@ -99,6 +136,7 @@ export default function EvidenceStep({ formData, updateFormData, nextStep, prevS
                         alt={`Evidence ${index + 1}`}
                         className="h-full w-full object-cover transition-transform group-hover:scale-105"
                       />
+                      
                     </div>
                     <button
                       type="button"
@@ -116,7 +154,7 @@ export default function EvidenceStep({ formData, updateFormData, nextStep, prevS
               </div>
               
               <div className="flex justify-end">
-                <Button onClick={() => setIsModalOpen(false)} className="bg-green-600 hover:bg-green-700">
+                <Button onClick={handleUpload} className="bg-green-600 hover:bg-green-700">
                   Upload
                 </Button>
               </div>
@@ -130,11 +168,15 @@ export default function EvidenceStep({ formData, updateFormData, nextStep, prevS
                 {previewUrls.map((url, index) => (
                   <div key={index} className="relative group">
                     <div className="overflow-hidden rounded-lg shadow-sm border border-gray-200 aspect-square">
-                      <img
+                      {/* <img
                         src={url || "/placeholder.svg"}
                         alt={`Evidence ${index + 1}`}
                         className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                      />
+                      /> */}
+                      <a href={url} className="p-2 bg-gray-100 text-blue-600 text-sm rounded break-all max-w-full shadow-sm" target="_blank">
+  {url}
+</a>
+
                     </div>
                     <button
                       type="button"

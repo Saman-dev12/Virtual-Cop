@@ -30,11 +30,11 @@ const HeroSection = () => (
       </p>
 
       <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6 sm:pt-8">
-        <Button variant="default" size="xl">
+        <Button variant="default" size="lg">
           <AlertCircle className="w-5 h-5 mr-2" />
           File a Complaint
         </Button>
-        <Button variant="outline" size="xl">
+        <Button variant="outline" size="lg">
           <Search className="w-5 h-5 mr-2" />
           View Crime Data
         </Button>

@@ -32,9 +32,8 @@ router.post("/login", async (req, res) => {
     res.cookie("wallet-address", address, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000,
-      path:"/"
     });
     console.log(user)
 
@@ -53,8 +52,7 @@ router.post("/logout", async(req, res) => {
     res.clearCookie("wallet-address", {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        path:"/"
+        sameSite: "lax",
       });
     res.status(200).json({ message: "Logged out successfully" });
     return;

@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import axios from "axios";
+import { toast } from "sonner"
+
 
 export function DashHead() {
   const { connectors, connect } = useConnect();
@@ -37,6 +39,7 @@ export function DashHead() {
       const res = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/logout`, {}, { withCredentials: true });
       console.log(res.data)
       await disconnect();
+      toast.success("Logged out successfully")
       Cookies.remove('address');
       router.refresh();
     } catch (error) {

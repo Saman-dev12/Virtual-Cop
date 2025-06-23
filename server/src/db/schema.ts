@@ -16,6 +16,7 @@ export const complaintsTable = pgTable("complaints", {
   email: text().notNull(),
   phone: text().notNull(),
   status: text().notNull(),
+  complaintIPFSHash: text(),
   createdAt: time("created_at").defaultNow().notNull(),
   updatedAt: time("updated_at").defaultNow().notNull(),
 });

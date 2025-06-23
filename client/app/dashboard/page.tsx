@@ -1,12 +1,11 @@
-"use client";
 import Link from "next/link";
 import React from "react";
+import DashboardPage from "./components/Dash";
 
 const Dashboard = () => {
   return (
-    <div className="">
-      
-      <Link href="/dashboard/complaint">Dashboard</Link>
+    <div>
+      <DashboardPage />
     </div>
   );
 };

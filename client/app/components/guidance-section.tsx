@@ -17,7 +17,7 @@ const GuidanceSection = () => (
         legal jargon, no confusion.
       </p>
 
-      <Button size="xl">
+      <Button size="lg">
         <Scale className="w-5 h-5 mr-2" />
         Talk to Legal AI
       </Button>

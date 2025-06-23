@@ -14,7 +14,7 @@ export default function SuccessPage() {
           Thank you for submitting your complaint. We have received your information and will review it shortly. You
           will receive a confirmation email with your complaint reference number.
         </p>
-        <Link href="/">
+        <Link href="/dashboard">
           <Button className="px-6 py-2 bg-green-600 hover:bg-green-700">Return to Home</Button>
         </Link>
       </div>

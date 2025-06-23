@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Provider from "@/utils/Provider";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "VeriFIR",
@@ -24,6 +25,7 @@ export default function RootLayout({
         >
           <Provider>
           {children}
+            <Toaster/>
           </Provider>
         </ThemeProvider>
       </body>

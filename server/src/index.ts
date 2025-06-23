@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import authrouter from "./routes/authRoutes";
 import cookieParser from "cookie-parser";
+import complaintrouter from "./routes/complaintRoutes";
 
 dotenv.config();
 
@@ -24,5 +25,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth",authrouter);
+app.use("/api/complaint",complaintrouter);
 
 app.listen(PORT, () => console.log("Server started at port", PORT));

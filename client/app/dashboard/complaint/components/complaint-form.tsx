@@ -10,6 +10,7 @@ import EvidenceStep from "./steps/evidence-step"
 import ContactStep from "./steps/contact-step"
 import ReviewStep from "./steps/review-step"
 import StepIndicator from "./step-indicator"
+import { toast } from "sonner"
 
 // Form validation schema
 const complaintSchema = z.object({
@@ -103,12 +104,13 @@ export default function ComplaintForm() {
       // Validate the entire form
       complaintSchema.parse(formData)
 
-      // Submit the form data
-      const response = await fetch("/api/complaints", {
+      console.log(formData)
+      const response = await fetch("http://localhost:8000/api/complaint/submitComplaint", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials:"include",
         body: JSON.stringify(formData),
       })
 
@@ -116,18 +118,7 @@ export default function ComplaintForm() {
         throw new Error("Failed to submit complaint")
       }
 
-      // Reset form and show success message
-      setFormData({
-        type: "",
-        description: "",
-        location: "",
-        images: [],
-        email: "",
-        phone: "",
-        status: "pending",
-      })
-
-      // Redirect or show success message
+      toast.success("Complaint submitted successfully!")
       router.push("/success")
     } catch (error) {
       if (error instanceof z.ZodError) {
