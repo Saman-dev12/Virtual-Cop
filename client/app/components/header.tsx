@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
-import { Menu, X, ShieldAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { WalletButtons } from "./WalletButtons";
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Menu, X, ShieldAlert } from "lucide-react";
+import { WalletButtons } from "../dashboard/components/wallet-buttons";
 import {
   NavigationMenu,
   NavigationMenuItem,

@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Users, User, Gavel } from "lucide-react";
 
-export default function WhoIsVeriFIRFor() {
+export default function VeriFIR() {
   const audience = [
     {
       title: "Citizens",

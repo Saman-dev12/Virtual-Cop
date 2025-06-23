@@ -1,9 +1,9 @@
 import { Header } from "./components/header";
 import { Footer } from "./components/footer";
 
+import VeriFIR from "./components/verifir-for";
 import HeroSection from "./components/hero-section";
 import ToolsSection from "./components/tools-section";
-import WhoIsVeriFIRFor from "./components/verifir-for";
 import CallToAction from "./components/call-to-action";
 import SafetyFeatures from "./components/safety-features";
 import FeaturesSection from "./components/features-section";
@@ -20,7 +20,7 @@ export default function Home() {
       <ToolsSection />
       <GuidanceSection />
       <SafetyFeatures />
-      <WhoIsVeriFIRFor />
+      <VeriFIR />
       <CallToAction />
       <Footer />
     </div>

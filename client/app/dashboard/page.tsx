@@ -1,14 +1,14 @@
-"use client"
-import React from 'react'
-import { DashHead } from '../components/DashHead'
+"use client";
+import React from "react";
+import { DashHead } from "./components/dash-head";
 
 const Dashboard = () => {
   return (
-    <div  className="dark bg-background text-foreground">
-        <DashHead/>
+    <div className="dark bg-background text-foreground">
+      <DashHead />
       Dash
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;
