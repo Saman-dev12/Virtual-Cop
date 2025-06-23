@@ -8,6 +8,13 @@
       "when": 1746217261093,
       "tag": "0000_abandoned_nebula",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1746550389637,
+      "tag": "0001_smiling_prodigy",
+      "breakpoints": true
     }
   ]
 }

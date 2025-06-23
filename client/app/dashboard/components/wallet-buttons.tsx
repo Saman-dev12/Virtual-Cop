@@ -6,7 +6,8 @@ import type { Connector } from 'wagmi';
 import { Wallet } from "lucide-react";
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 interface WalletButtonsProps {
   variant?: 'desktop' | 'mobile';
@@ -17,16 +18,33 @@ export function WalletButtons({ variant = 'desktop' }: WalletButtonsProps) {
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
   const router = useRouter();
-
+  const [hasLoggedIn, setHasLoggedIn] = useState(false);
 
   useEffect(() => {
-    if (isConnected && address) {
-      Cookies.set('address', address, { path: '/' });
-      router.refresh(); 
-    } else {
+    const loginUser = async () => {
+      try {
+        const res = await axios.post(
+          'http://localhost:8000/api/auth/login',
+          { address },
+          { withCredentials: true }
+        );
+
+        Cookies.set('address', address!, { path: '/' });
+        setHasLoggedIn(true);
+        console.log("Login success:", res.data);
+        router.refresh();
+      } catch (error) {
+        console.error("Login error:", error);
+      }
+    };
+
+    if (isConnected && address && !hasLoggedIn) {
+      loginUser();
+    } else if (!isConnected && hasLoggedIn) {
       Cookies.remove('address');
+      setHasLoggedIn(false);
     }
-  }, [isConnected, address, router]);
+  }, [isConnected, address, hasLoggedIn, router]);
 
   const handleConnect = async (connector: Connector) => {
     try {
@@ -38,8 +56,11 @@ export function WalletButtons({ variant = 'desktop' }: WalletButtonsProps) {
 
   const handleDisconnect = async () => {
     try {
+      const res = await axios.post('http://localhost:8000/api/auth/logout', {}, { withCredentials: true });
+      console.log(res.data)
       await disconnect();
       Cookies.remove('address');
+      setHasLoggedIn(false);
       router.refresh();
     } catch (error) {
       console.error('Failed to disconnect:', error);

@@ -1,12 +1,13 @@
 "use client";
 
-import { useAccount, useConnect, useDisconnect } from 'wagmi';
-import { Button } from "@/components/ui/button";
-import type { Connector } from 'wagmi';
+import Cookies from "js-cookie";
+import { useEffect } from "react";
 import { Wallet } from "lucide-react";
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import type { Connector } from "wagmi";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
+import axios from "axios";
 
 export function DashHead() {
   const { connectors, connect } = useConnect();
@@ -16,10 +17,10 @@ export function DashHead() {
 
   useEffect(() => {
     if (isConnected && address) {
-      Cookies.set('address', address, { path: '/' });
+      Cookies.set("address", address, { path: "/" });
       router.refresh();
     } else {
-      Cookies.remove('address');
+      Cookies.remove("address");
     }
   }, [isConnected, address, router]);
 
@@ -27,12 +28,14 @@ export function DashHead() {
     try {
       await connect({ connector });
     } catch (error) {
-      console.error('Failed to connect:', error);
+      console.error("Failed to connect:", error);
     }
   };
 
   const handleDisconnect = async () => {
     try {
+      const res = await axios.post('http://localhost:8000/api/auth/logout', {}, { withCredentials: true });
+      console.log(res.data)
       await disconnect();
       Cookies.remove('address');
       router.refresh();
@@ -47,13 +50,14 @@ export function DashHead() {
     <header className="w-full px-4 py-3 bg-gray-900 border-b border-gray-800 shadow-sm flex items-center justify-between">
       <div className="text-white text-lg font-semibold flex items-center gap-2">
         <Wallet className="w-5 h-5 text-orange-400" />
-      
       </div>
 
       <div className="flex items-center space-x-3">
         {address ? (
           <>
-            <span className="text-orange-300/80 text-sm hidden sm:block">Connected:</span>
+            <span className="text-orange-300/80 text-sm hidden sm:block">
+              Connected:
+            </span>
             <span className="px-2 py-1 rounded bg-orange-500/10 text-orange-400 text-sm">
               {address.slice(0, 6)}...{address.slice(-4)}
             </span>

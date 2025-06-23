@@ -4,9 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node dist/index",
+    "start": "node dist/src/index",
     "build": "tsc -b",
-    "dev": "concurrently \"tsc -w\" \"nodemon dist/index\"",
+    "dev": "concurrently \"tsc -w\" \"nodemon dist/src/index\"",
     "db:generate": "drizzle-kit generate --schema src/db/schema.ts --dialect postgresql --out ./drizzle",
     "db:migrate": "tsx ./src/scripts/migrate.ts",
     "db:studio": "drizzle-kit studio"
@@ -17,12 +17,14 @@
   "description": "",
   "dependencies": {
     "@neondatabase/serverless": "^1.0.0",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.43.1",
     "express": "^5.1.0"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/node": "^22.15.3",
