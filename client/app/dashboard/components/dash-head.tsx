@@ -34,7 +34,7 @@ export function DashHead() {
 
   const handleDisconnect = async () => {
     try {
-      const res = await axios.post('http://localhost:8000/api/auth/logout', {}, { withCredentials: true });
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/logout`, {}, { withCredentials: true });
       console.log(res.data)
       await disconnect();
       Cookies.remove('address');
@@ -58,7 +58,7 @@ export function DashHead() {
             <span className="text-orange-300/80 text-sm hidden sm:block">
               Connected:
             </span>
-            <span className="px-2 py-1 rounded bg-orange-500/10 text-orange-400 text-sm">
+            <span className="px-2 py-1 rounded text-white bg-blue-950 text-sm">
               {address.slice(0, 6)}...{address.slice(-4)}
             </span>
             <Button

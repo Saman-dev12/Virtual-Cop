@@ -1,12 +1,12 @@
 "use client";
+import Link from "next/link";
 import React from "react";
-import { DashHead } from "./components/dash-head";
 
 const Dashboard = () => {
   return (
-    <div className="dark bg-background text-foreground">
-      <DashHead />
-      Dash
+    <div className="">
+      
+      <Link href="/dashboard/complaint">Dashboard</Link>
     </div>
   );
 };

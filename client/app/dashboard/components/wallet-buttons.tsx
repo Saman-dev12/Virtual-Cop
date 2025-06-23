@@ -24,7 +24,7 @@ export function WalletButtons({ variant = 'desktop' }: WalletButtonsProps) {
     const loginUser = async () => {
       try {
         const res = await axios.post(
-          'http://localhost:8000/api/auth/login',
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/login`,
           { address },
           { withCredentials: true }
         );
@@ -56,7 +56,7 @@ export function WalletButtons({ variant = 'desktop' }: WalletButtonsProps) {
 
   const handleDisconnect = async () => {
     try {
-      const res = await axios.post('http://localhost:8000/api/auth/logout', {}, { withCredentials: true });
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/logout`, {}, { withCredentials: true });
       console.log(res.data)
       await disconnect();
       Cookies.remove('address');
