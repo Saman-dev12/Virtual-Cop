@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { Menu, X, ShieldAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { WalletButtons } from "./WalletButtons";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -95,6 +96,7 @@ export function Header() {
           </div>
 
           <div className="hidden md:flex items-center gap-4">
+            <WalletButtons variant="desktop" />
             <Button
               variant="outline"
               className="border-orange-500 text-orange-500 hover:text-orange-500 hover:bg-orange-500/10 rounded-lg px-5 transition-all duration-300 hover:shadow-md hover:shadow-orange-500/20"
@@ -126,6 +128,7 @@ export function Header() {
               </Link>
             ))}
             <div className="pt-3 space-y-3">
+              <WalletButtons variant="mobile" />
               <Button variant="outline" size="lg" className="w-full sm:w-auto">
                 Officer Login
               </Button>
